@@ -28,7 +28,9 @@
     "visitors",
     "ast"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "lodash.assign": "^4.0.9"
+  },
   "devDependencies": {
     "ava": "^0.15.2",
     "coveralls": "^2.11.9",

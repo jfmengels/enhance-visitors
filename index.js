@@ -1,10 +1,30 @@
 'use strict';
-module.exports = function (str, opts) {
-  if (typeof str !== 'string') {
-    throw new TypeError('Expected a string');
+
+var assign = require('lodash.assign');
+
+function mergeHandlers(prevHandler, newHandler) {
+  Object.keys(prevHandler).forEach(function (key) {
+    var predef = prevHandler[key];
+
+    if (typeof newHandler[key] === 'function') {
+      prevHandler[key] = function (node) {
+        if (/:exit$/.test(key)) {
+          newHandler[key](node);
+          predef(node);
+        } else {
+          predef(node);
+          newHandler[key](node);
+        }
+      };
+    }
+  });
+
+  return assign({}, newHandler, prevHandler);
+}
+
+module.exports = function mergeVisitors(handlers) {
+  if (Array.isArray(handlers)) {
+    return handlers.reduce(mergeHandlers);
   }
-
-  opts = opts || {};
-
-  return str + ' & ' + (opts.postfix || 'rainbows');
+  return handlers;
 };
