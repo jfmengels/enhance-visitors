@@ -29,7 +29,8 @@
     "ast"
   ],
   "dependencies": {
-    "lodash.assign": "^4.0.9"
+    "lodash.assign": "^4.0.9",
+    "lodash.rest": "^4.0.3"
   },
   "devDependencies": {
     "ava": "^0.15.2",

@@ -1,30 +1,33 @@
 'use strict';
 
+var rest = require('lodash.rest');
 var assign = require('lodash.assign');
 
 function mergeHandlers(prevHandler, newHandler) {
-  Object.keys(prevHandler).forEach(function (key) {
-    var predef = prevHandler[key];
-
-    if (typeof newHandler[key] === 'function') {
+  Object.keys(prevHandler)
+    .filter(function takeConflictingVisitors(key) {
+      return newHandler[key];
+    })
+    .forEach(function mergeVisitors(key) {
+      var previousVisitor = prevHandler[key];
       prevHandler[key] = function (node) {
         if (/:exit$/.test(key)) {
           newHandler[key](node);
-          predef(node);
+          previousVisitor(node);
         } else {
-          predef(node);
+          previousVisitor(node);
           newHandler[key](node);
         }
       };
-    }
-  });
+    });
 
   return assign({}, newHandler, prevHandler);
 }
 
-module.exports = function mergeVisitors(handlers) {
-  if (Array.isArray(handlers)) {
-    return handlers.reduce(mergeHandlers);
-  }
-  return handlers;
+var mergeVisitors = rest(function mergeVisitors(handlers) {
+  return handlers.reduce(mergeHandlers);
+});
+
+module.exports = {
+  mergeVisitors: mergeVisitors
 };
