@@ -26,7 +26,6 @@ test('should return visitor object if it is single', t => {
   const {visitor1} = fixtures();
 
   t.true(mergeVisitors(visitor1) === visitor1);
-  t.true(mergeVisitors(visitor1) === visitor1);
 });
 
 test('should merge visitor objects and return a new visitor object', t => {
