@@ -17,9 +17,7 @@ var merge = _.mergeWith(function (prev, next, key) {
   };
 });
 
-var mergeVisitors = _.rest(function _mergeVisitors(handlers) {
-  return handlers.reduce(merge, {});
-});
+var mergeVisitors = _.rest(_.reduce(merge, {}));
 
 var visitIf = _.rest(function _visitIf(predicates) {
   return function (visitor) {
