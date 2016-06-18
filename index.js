@@ -2,26 +2,20 @@
 
 var _ = require('lodash/fp');
 
-function merge(prevHandler, newHandler) {
-  Object.keys(prevHandler)
-    .filter(function takeConflictingVisitors(key) {
-      return newHandler[key];
-    })
-    .forEach(function mergeVisitors(key) {
-      var previousVisitor = prevHandler[key];
-      prevHandler[key] = function (node) {
-        if (/:exit$/.test(key)) {
-          newHandler[key](node);
-          previousVisitor(node);
-        } else {
-          previousVisitor(node);
-          newHandler[key](node);
-        }
-      };
-    });
-
-  return _.assign(newHandler, prevHandler);
-}
+var merge = _.mergeWith(function (prev, next, key) {
+  if (!prev) {
+    return next;
+  }
+  return function (node) {
+    if (/:exit$/.test(key)) {
+      next(node);
+      prev(node);
+    } else {
+      prev(node);
+      next(node);
+    }
+  };
+});
 
 var mergeVisitors = _.rest(function _mergeVisitors(handlers) {
   return handlers.reduce(merge, {});
