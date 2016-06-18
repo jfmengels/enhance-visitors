@@ -1,4 +1,4 @@
-# eslint-enhanced-visitors [![Build Status](https://travis-ci.org/jfmengels/eslint-enhanced-visitors.svg?branch=master)](https://travis-ci.org/jfmengels/eslint-enhanced-visitors) [![Coverage Status](https://coveralls.io/repos/github/jfmengels/eslint-enhanced-visitors/badge.svg?branch=master)](https://coveralls.io/github/jfmengels/eslint-enhanced-visitors?branch=master)
+# enhanced-visitors [![Build Status](https://travis-ci.org/jfmengels/enhanced-visitors.svg?branch=master)](https://travis-ci.org/jfmengels/enhanced-visitors) [![Coverage Status](https://coveralls.io/repos/github/jfmengels/enhanced-visitors/badge.svg?branch=master)](https://coveralls.io/github/jfmengels/enhanced-visitors?branch=master)
 
 > My finest module
 
@@ -6,14 +6,14 @@
 ## Install
 
 ```
-$ npm install --save eslint-enhanced-visitors
+$ npm install --save enhanced-visitors
 ```
 
 
 ## Usage
 
 ```js
-const eslintEnhancedVisitors = require('eslint-enhanced-visitors');
+const eslintEnhancedVisitors = require('enhanced-visitors');
 
 eslintEnhancedVisitors('unicorns');
 //=> 'unicorns & rainbows'
