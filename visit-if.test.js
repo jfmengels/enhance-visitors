@@ -1,4 +1,3 @@
-/* eslint-disable ava/test-title */
 import _ from 'lodash';
 import test from 'ava';
 import {visitIf} from './';

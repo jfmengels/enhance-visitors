@@ -56,7 +56,7 @@ test('should merge multiple visitor objects and return a new visitor object', t 
 function sameArgumentToEveryVisitor(t, type, nbCalls) {
   t.plan(nbCalls);
   const value = {some: 'value'};
-  const fn = (arg) => t.true(arg === value);
+  const fn = arg => t.true(arg === value);
   const visitor1 = {
     Identifier: fn,
     Literal: fn
@@ -88,7 +88,7 @@ test(sameArgumentToEveryVisitor, 'ImportDeclaration', 0);
 
 function callInOrder(t, type, expectedOrder) {
   let order = [];
-  const fn = (n) => () => order.push(n);
+  const fn = n => () => order.push(n);
   const visitor1 = {
     'Identifier': fn(1),
     'Identifier:exit': fn(1),
