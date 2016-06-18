@@ -78,7 +78,7 @@ function sameArgumentToEveryVisitor(t, type, nbCalls) {
 }
 
 sameArgumentToEveryVisitor.title = (t, type, nbCalls) =>
-  `should call the same argument to every visitor function (${type} - ${nbCalls} times)`;
+  `should call every visitor supporting node type with the same argument (${type} - ${nbCalls} calls)`;
 
 test(sameArgumentToEveryVisitor, 'Identifier', 3);
 test(sameArgumentToEveryVisitor, 'Literal', 2);
