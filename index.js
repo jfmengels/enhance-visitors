@@ -19,7 +19,7 @@ var merge = _.mergeWith(function _merge(prev, next, key) {
 
 var mergeVisitors = _.reduce(merge, {});
 
-var visitIf = _.rest(function _visitIf(predicates) {
+function visitIf(predicates) {
   return function (visitor) {
     return function (node) {
       var isValid = predicates.every(function (fn) {
@@ -30,7 +30,7 @@ var visitIf = _.rest(function _visitIf(predicates) {
       }
     };
   };
-});
+}
 
 module.exports = {
   mergeVisitors: mergeVisitors,
