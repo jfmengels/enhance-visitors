@@ -1,9 +1,9 @@
 {
-  "name": "enhanced-visitors",
+  "name": "enhance-visitors",
   "version": "0.0.0",
   "description": "My finest module",
   "license": "MIT",
-  "repository": "jfmengels/enhanced-visitors",
+  "repository": "jfmengels/enhance-visitors",
   "author": {
     "name": "Jeroen Engels",
     "email": "jfm.engels@gmail.com",
