@@ -118,16 +118,20 @@ function callInOrder(t, type, expectedOrder) {
   t.deepEqual(order, expectedOrder);
 }
 
-callInOrder.title = (t, type) =>
-  `should call visitors in the expected order (${type})`;
+callInOrder.title = (t, type) => {
+  if (type.includes(':exit')) {
+    return `should call exit visitors in last-to-first order (${type})`;
+  }
+  return `should call entry visitors in first-to-last order (${type})`;
+};
 
 test(callInOrder, 'Identifier', [1, 2, 3]);
-test(callInOrder, 'Identifier:exit', [3, 2, 1]);
 test(callInOrder, 'Literal', [1, 3]);
-test(callInOrder, 'Literal:exit', [3, 1]);
 test(callInOrder, 'VariableDeclaration', [2]);
-test(callInOrder, 'VariableDeclaration:exit', [2]);
 test(callInOrder, 'ExpressionStatement', [3]);
-test(callInOrder, 'ExpressionStatement:exit', [3]);
 test(callInOrder, 'ImportDeclaration', []);
+test(callInOrder, 'Identifier:exit', [3, 2, 1]);
+test(callInOrder, 'Literal:exit', [3, 1]);
+test(callInOrder, 'VariableDeclaration:exit', [2]);
+test(callInOrder, 'ExpressionStatement:exit', [3]);
 test(callInOrder, 'ImportDeclaration:exit', []);
