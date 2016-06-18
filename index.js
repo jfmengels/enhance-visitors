@@ -1,6 +1,6 @@
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash/fp');
 
 function mergeHandlers(prevHandler, newHandler) {
   Object.keys(prevHandler)
@@ -20,7 +20,7 @@ function mergeHandlers(prevHandler, newHandler) {
       };
     });
 
-  return _.assign({}, newHandler, prevHandler);
+  return _.assign(newHandler, prevHandler);
 }
 
 var mergeVisitors = _.rest(function _mergeVisitors(handlers) {

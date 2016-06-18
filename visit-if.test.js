@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _ from 'lodash/fp';
 import test from 'ava';
 import {visitIf} from './';
 
