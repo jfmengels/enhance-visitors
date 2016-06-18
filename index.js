@@ -2,7 +2,7 @@
 
 var _ = require('lodash/fp');
 
-function mergeHandlers(prevHandler, newHandler) {
+function merge(prevHandler, newHandler) {
   Object.keys(prevHandler)
     .filter(function takeConflictingVisitors(key) {
       return newHandler[key];
@@ -24,7 +24,7 @@ function mergeHandlers(prevHandler, newHandler) {
 }
 
 var mergeVisitors = _.rest(function _mergeVisitors(handlers) {
-  return handlers.reduce(mergeHandlers, {});
+  return handlers.reduce(merge, {});
 });
 
 var visitIf = _.rest(function _visitIf(predicates) {
