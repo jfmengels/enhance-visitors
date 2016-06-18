@@ -25,7 +25,7 @@ function fixtures() {
 test('should return visitor object if it is single', t => {
   const {visitor1} = fixtures();
 
-  const visitor = mergeVisitors(visitor1);
+  const visitor = mergeVisitors([visitor1]);
 
   t.deepEqual(visitor, visitor1);
 });
@@ -33,7 +33,7 @@ test('should return visitor object if it is single', t => {
 test('should merge visitor objects and return a new visitor object', t => {
   const {visitor1, visitor2} = fixtures();
 
-  const visitor = mergeVisitors(visitor1, visitor2);
+  const visitor = mergeVisitors([visitor1, visitor2]);
 
   t.true(typeof visitor === 'object');
   t.true(Object.keys(visitor).length === 3);
@@ -45,7 +45,7 @@ test('should merge visitor objects and return a new visitor object', t => {
 test('should merge multiple visitor objects and return a new visitor object', t => {
   const {visitor1, visitor2, visitor3} = fixtures();
 
-  const visitor = mergeVisitors(visitor1, visitor2, visitor3);
+  const visitor = mergeVisitors([visitor1, visitor2, visitor3]);
 
   t.true(typeof visitor === 'object');
   t.true(Object.keys(visitor).length === 4);
@@ -62,7 +62,7 @@ test('should not mutate original visitor objects', t => {
   const visitor2IdentifierFn = visitor2.Identifier;
   const visitor2VariableDeclarationFn = visitor2.VariableDeclaration;
 
-  const visitor = mergeVisitors(visitor1, visitor2);
+  const visitor = mergeVisitors([visitor1, visitor2]);
 
   t.true(typeof visitor === 'object');
   t.true(Object.keys(visitor1).length === 2);
@@ -91,7 +91,7 @@ function sameArgumentToEveryVisitor(t, type, nbCalls) {
     Literal: fn,
     ExpressionStatement: fn
   };
-  const visitor = mergeVisitors(visitor1, visitor2, visitor3);
+  const visitor = mergeVisitors([visitor1, visitor2, visitor3]);
 
   if (visitor[type]) {
     visitor[type](value);
@@ -130,7 +130,7 @@ function callInOrder(t, type, expectedOrder) {
     'ExpressionStatement': fn(3),
     'ExpressionStatement:exit': fn(3)
   };
-  const visitor = mergeVisitors(visitor1, visitor2, visitor3);
+  const visitor = mergeVisitors([visitor1, visitor2, visitor3]);
 
   if (visitor[type]) {
     visitor[type]();
