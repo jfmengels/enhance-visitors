@@ -25,7 +25,9 @@ function fixtures() {
 test('should return visitor object if it is single', t => {
   const {visitor1} = fixtures();
 
-  t.true(mergeVisitors(visitor1) === visitor1);
+  const visitor = mergeVisitors(visitor1);
+
+  t.deepEqual(visitor, visitor1);
 });
 
 test('should merge visitor objects and return a new visitor object', t => {
@@ -51,6 +53,25 @@ test('should merge multiple visitor objects and return a new visitor object', t 
   t.truthy(visitor.Literal);
   t.truthy(visitor.VariableDeclaration);
   t.truthy(visitor.ExpressionStatement);
+});
+
+test('should not mutate original visitor objects', t => {
+  const {visitor1, visitor2} = fixtures();
+  const visitor1IdentifierFn = visitor1.Identifier;
+  const visitor1LiteralFn = visitor1.Literal;
+  const visitor2IdentifierFn = visitor2.Identifier;
+  const visitor2VariableDeclarationFn = visitor2.VariableDeclaration;
+
+  const visitor = mergeVisitors(visitor1, visitor2);
+
+  t.true(typeof visitor === 'object');
+  t.true(Object.keys(visitor1).length === 2);
+  t.true(Object.keys(visitor2).length === 2);
+
+  t.true(visitor1IdentifierFn === visitor1.Identifier);
+  t.true(visitor1LiteralFn === visitor1.Literal);
+  t.true(visitor2IdentifierFn === visitor2.Identifier);
+  t.true(visitor2VariableDeclarationFn === visitor2.VariableDeclaration);
 });
 
 function sameArgumentToEveryVisitor(t, type, nbCalls) {

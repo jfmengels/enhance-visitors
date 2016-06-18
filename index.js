@@ -24,7 +24,7 @@ function mergeHandlers(prevHandler, newHandler) {
 }
 
 var mergeVisitors = _.rest(function _mergeVisitors(handlers) {
-  return handlers.reduce(mergeHandlers);
+  return handlers.reduce(mergeHandlers, {});
 });
 
 var visitIf = _.rest(function _visitIf(predicates) {
