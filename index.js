@@ -2,7 +2,7 @@
 
 var _ = require('lodash/fp');
 
-var merge = _.mergeWith(function (prev, next, key) {
+var merge = _.mergeWith(function _merge(prev, next, key) {
   if (!prev) {
     return next;
   }
