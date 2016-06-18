@@ -1,7 +1,6 @@
 'use strict';
 
-var rest = require('lodash.rest');
-var assign = require('lodash.assign');
+var _ = require('lodash');
 
 function mergeHandlers(prevHandler, newHandler) {
   Object.keys(prevHandler)
@@ -21,13 +20,27 @@ function mergeHandlers(prevHandler, newHandler) {
       };
     });
 
-  return assign({}, newHandler, prevHandler);
+  return _.assign({}, newHandler, prevHandler);
 }
 
-var mergeVisitors = rest(function mergeVisitors(handlers) {
+var mergeVisitors = _.rest(function _mergeVisitors(handlers) {
   return handlers.reduce(mergeHandlers);
 });
 
+var visitIf = _.rest(function _visitIf(predicates) {
+  return function (visitor) {
+    return function (node) {
+      var isValid = predicates.every(function (fn) {
+        return fn(node);
+      });
+      if (isValid) {
+        return visitor(node);
+      }
+    };
+  };
+});
+
 module.exports = {
-  mergeVisitors: mergeVisitors
+  mergeVisitors: mergeVisitors,
+  visitIf: visitIf
 };
