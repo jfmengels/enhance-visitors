@@ -140,7 +140,7 @@ function callInOrder(t, type, expectedOrder) {
 }
 
 callInOrder.title = (t, type) => {
-  if (type.includes(':exit')) {
+  if (type.indexOf(':exit') !== -1) {
     return `should call exit visitors in last-to-first order (${type})`;
   }
   return `should call entry visitors in first-to-last order (${type})`;
