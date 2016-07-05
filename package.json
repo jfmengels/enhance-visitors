@@ -1,7 +1,7 @@
 {
   "name": "enhance-visitors",
   "version": "0.0.0",
-  "description": "My finest module",
+  "description": "Enhance your ESLint visitors with shared logic",
   "license": "MIT",
   "repository": "jfmengels/enhance-visitors",
   "author": {

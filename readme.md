@@ -24,22 +24,21 @@ but rather the
 
 ### .mergeVisitors([visitors])
 
-#### visitors: `object[]`
-
-A list of visitor objects, such as `{CallExpression: fn1, Identifier: fn2, ...}`.
-
-#### Description
-
 Merges multiple visitor objects, so that all visitors for a node type are ran one after the other, in first-to-last order. For `<type>:exit` visitors, they are traversed last-to-first.
 
-Example:
+#### visitors: `object[]`
+
+An array of visitor objects, such as `{CallExpression: fn1, Identifier: fn2, ...}`.
+
+#### Example
+
 ```js
 var enhance = require('enhance-visitors');
 
 function log(message) {
   return function() {
     console.log(message);
-  }
+  };
 }
 
 module.exports = function(context) {
@@ -65,7 +64,7 @@ Given the following code: `foo()`, it should print
 ```
 
 
-## Usage example: Detection of a package import
+#### Usage example: Detection of a package import
 
 Let's say you have a npm package called `unicorn`, and that you are writing an ESLint plugin for it, so that users use it as intended and avoid pitfalls. You will write multiple rules for it, and most or all of them will need to know which variable references `unicorn`.
 
@@ -129,6 +128,44 @@ module.exports = function (context) {
 
 It looks pretty much like a normal rule implementation, but there are a few differences.
 In `Noteworthy line 1 & 2`, we are merging the `unicornSeeker` enhancer we wrote earlier with the rule implementation. This will make `unicornSeeker` traverse the AST and collect information that we can then use like we did in `Noteworthy line 3`.
+
+### .visitIf([predicates])
+
+Returns a function `fn` that takes a visitor function `visitor`. When `fn` is called (usually an AST node), `visitor` will get called with the same argument only if all predicates, also called with the same argument, return a truthy value.
+
+This essentially allows writing less and/or shorter reusable conditions inside your visitor.
+
+#### predicates: `function[]`
+
+An array of predicate functions, that take a AST node as argument and return a boolean.
+
+#### Example
+
+```js
+var enhance = require('enhance-visitors');
+
+function isRequireCall(node) {
+  return node &&
+    node.callee &&
+    node.callee.type === 'Identifier' &&
+    node.callee.name === 'require' &&
+    node.arguments.length === 1 &&
+    node.arguments[0].type === 'Literal';
+}
+
+module.exports = function(context) {
+  return {
+    CallExpression: enhance.visitIf([isRequireCall])(node => {
+      if (node.arguments[0] !== 'unicorn') {
+        context.report({
+          node,
+          message: 'You only need to use `unicorn`'
+        })
+      }
+    })
+  };
+}
+```
 
 ## License
 
