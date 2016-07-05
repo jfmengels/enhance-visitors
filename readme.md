@@ -33,7 +33,7 @@ An array of visitor objects, such as `{CallExpression: fn1, Identifier: fn2, ...
 #### Example
 
 ```js
-var enhance = require('enhance-visitors');
+const enhance = require('enhance-visitors');
 
 function log(message) {
   return function() {
@@ -94,21 +94,21 @@ This visitors object will be traversed along and before your rule implementation
 Then in your rule file (`<root>/rules/no-unknown-methods.js`, which detects methods that do not exist in the package), we'll have:
 
 ```js
-var enhance = require('enhance-visitors');
-var unicornSeeker = require('./core/unicornSeeker');
+const enhance = require('enhance-visitors');
+const unicornSeeker = require('./core/unicornSeeker');
 
-var existingMethods = [
+const existingMethods = [
   'makeRainbow', 'trample', 'flyWithGrace'
 ];
 
 module.exports = function (context) {
-  var imports = {};
+  const imports = {};
 
   return enhance.mergeVisitors([ // Noteworthy line 1
     unicornSeekerEnhancer(imports), // Noteworthy line 2
     {
       CallExpression: function (node) {
-        var callee = node.callee;
+        const callee = node.callee;
         if (callee.type === 'MemberExpression' &&
           callee.object.type === 'Identifier' &&
           callee.object.name === imports.unicorn && // Noteworthy line 3
@@ -142,7 +142,7 @@ An array of predicate functions, that take a AST node as argument and return a b
 #### Example
 
 ```js
-var enhance = require('enhance-visitors');
+const enhance = require('enhance-visitors');
 
 function isRequireCall(node) {
   return node &&

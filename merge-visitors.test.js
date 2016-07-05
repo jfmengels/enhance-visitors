@@ -1,4 +1,3 @@
-/* eslint-disable ava/test-title */
 import test from 'ava';
 import {mergeVisitors} from './';
 
@@ -108,7 +107,7 @@ test(sameArgumentToEveryVisitor, 'ExpressionStatement', 1);
 test(sameArgumentToEveryVisitor, 'ImportDeclaration', 0);
 
 function callInOrder(t, type, expectedOrder) {
-  let order = [];
+  const order = [];
   const fn = n => () => order.push(n);
   const visitor1 = {
     'Identifier': fn(1),

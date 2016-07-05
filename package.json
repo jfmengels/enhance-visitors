@@ -10,7 +10,7 @@
     "url": "github.com/jfmengels"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4.0.0"
   },
   "scripts": {
     "test": "xo && nyc ava"
@@ -44,6 +44,7 @@
     ]
   },
   "xo": {
+    "esnext": true,
     "space": 2
   }
 }

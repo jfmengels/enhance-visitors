@@ -1,12 +1,12 @@
 'use strict';
 
-var _ = require('lodash/fp');
+const _ = require('lodash/fp');
 
-var merge = _.mergeWith(function _merge(prev, next, key) {
+const merge = _.mergeWith((prev, next, key) => {
   if (!prev) {
     return next;
   }
-  return function (node) {
+  return node => {
     if (/:exit$/.test(key)) {
       next(node);
       prev(node);
@@ -17,22 +17,16 @@ var merge = _.mergeWith(function _merge(prev, next, key) {
   };
 });
 
-var mergeVisitors = _.reduce(merge, {});
+const mergeVisitors = _.reduce(merge, {});
 
-function visitIf(predicates) {
-  return function (visitor) {
-    return function (node) {
-      var isValid = predicates.every(function (fn) {
-        return fn(node);
-      });
-      if (isValid) {
-        return visitor(node);
-      }
-    };
-  };
-}
+const visitIf = predicates => visitor => node => {
+  const isValid = predicates.every(fn => fn(node));
+  if (isValid) {
+    return visitor(node);
+  }
+};
 
 module.exports = {
-  mergeVisitors: mergeVisitors,
-  visitIf: visitIf
+  mergeVisitors,
+  visitIf
 };
