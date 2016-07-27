@@ -167,6 +167,10 @@ module.exports = function(context) {
 }
 ```
 
+## Thanks
+
+Special thanks to [@twada](https://github.com/twada) who created the original script for `mergeVisitors`.
+
 ## License
 
 MIT © [Jeroen Engels](https://github.com/jfmengels)
